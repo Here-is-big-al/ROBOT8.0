@@ -72,89 +72,8 @@ public class GamepadControls {
 
     //allows the gamepad to change mode and state
     public void universalControls() throws InterruptedException {
-        if (gamepad1.x) {
-            //robot.intake.turnIntakeOff();
-            //robot.drivetrain.setMotorPowers(0, 0, 0, 0);
-            robot.drivetrain.breakFollowingSmooth();
-            currentMode = Mode.DRIVER_CONTROL;
-            currentMovement = Movement.DRIVER_IN_CONTROL;
-            collectRotations = 0;
-            collectStraights = 0;
-            locateRotations = 0;
-
-        } else if (gamepad1.y) {
-            //robot.intake.turnIntakeOff();
-            currentMode = Mode.FIRST_AUTO_CONTROL;
-            currentMovement = Movement.IDLE;
-
-        } else if (gamepad1.a) {
-            currentState = State.LOCATING;
-
-        } else if (gamepad1.b) {
-            robot.drivetrain.breakFollowingSmooth();
-            robot.intake.turnIntakeOff();
-            currentState = State.IDLE;
-
-        }
 
 
-        if (gamepad2.dpad_right) {
-            robot.cameraControls.visionPortal1.resumeLiveView();
-            gain1 = Range.clip(gain1-10, minGain1, maxGain1);
-            robot.cameraControls.setManualExposure(exposure1, gain1, robot.cameraControls.visionPortal1);
-
-        } else if (gamepad2.dpad_left) {
-            robot.cameraControls.visionPortal1.stopLiveView();
-
-        } else if (gamepad2.dpad_up) {
-            robot.cameraControls.visionPortal2.resumeLiveView();
-            gain2 = Range.clip(gain2-10, minGain2, maxGain2);
-            robot.cameraControls.setManualExposure(exposure2, gain2, robot.cameraControls.visionPortal2);
-
-        } else if (gamepad2.dpad_down) {
-            robot.cameraControls.visionPortal2.stopLiveView();
-
-        }
-
-        if (gamepad2.b) {
-            robot.cameraControls.visionPortal1.resumeStreaming();
-
-        } else if (gamepad2.x) {
-            robot.cameraControls.visionPortal1.stopStreaming();
-
-        } else if (gamepad2.y) {
-            robot.cameraControls.visionPortal2.resumeStreaming();
-
-        } else if (gamepad2.a) {
-            robot.cameraControls.visionPortal2.stopStreaming();
-
-        }
-
-        boolean leftTrigger2 = gamepad2.left_trigger > 0.25, rightTrigger2 = gamepad2.right_trigger > 0.25, leftBumper2 = gamepad2.left_bumper, rightBumper2 = gamepad2.right_bumper;
-
-
-        if (leftTrigger2 && !lastLeftTrigger2) {
-            exposure1 = Range.clip(exposure1-1, minExposure1, maxExposure1);
-            robot.cameraControls.setManualExposure(exposure1, gain1, robot.cameraControls.visionPortal1);
-
-        } else if (leftBumper2 && !lastLeftBumper2) {
-            exposure1 = Range.clip(exposure1+1, minExposure1, maxExposure1);
-            robot.cameraControls.setManualExposure(exposure1, gain1, robot.cameraControls.visionPortal1);
-
-        } else if (rightTrigger2 && !lastRightTrigger2) {
-            exposure2 = Range.clip(exposure2-1, minExposure2, maxExposure2);
-            robot.cameraControls.setManualExposure(exposure2, gain2, robot.cameraControls.visionPortal2);
-
-        } else if (rightBumper2 && !lastRightBumper2) {
-            exposure2 = Range.clip(exposure2+1, minExposure2, maxExposure2);
-            robot.cameraControls.setManualExposure(exposure2, gain2, robot.cameraControls.visionPortal2);
-
-        }
-
-        lastLeftTrigger2 = leftTrigger2;
-        lastRightTrigger2 = rightTrigger2;
-        lastLeftBumper2 = leftBumper2;
-        lastRightBumper2 = rightBumper2;
 
     }
 
@@ -169,25 +88,6 @@ public class GamepadControls {
                 )
         );
 
-        //if triggers are 0 turn off intake if it is not continuous
-        if (gamepad1.left_trigger < 0.1 && gamepad1.right_trigger < 0.1 && !robot.intake.isIntakeRunningContinuously()) {
-            robot.intake.turnIntakeOff();
-
-        }
-
-        if (gamepad1.left_bumper) {
-            robot.intake.turnIntakeOff();
-
-        } else if (gamepad1.right_bumper) {
-            robot.intake.turnIntakeOn();
-
-        } else if (gamepad1.left_trigger > 0.1) {
-            robot.intake.intakeVariablePower(-gamepad1.left_trigger);
-
-        } else if (gamepad1.right_trigger > 0.1) {
-            robot.intake.intakeVariablePower(gamepad1.right_trigger);
-
-        }
 
     }
 }

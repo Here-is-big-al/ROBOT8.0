@@ -4,11 +4,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.updatedDrive4.objects.REVDistanceSensor;
 import org.firstinspires.ftc.teamcode.updatedDrive4.objects.Drivetrain;
 import org.firstinspires.ftc.teamcode.updatedDrive4.objects.GamepadControls;
 import org.firstinspires.ftc.teamcode.updatedDrive4.objects.Imu;
-import org.firstinspires.ftc.teamcode.updatedDrive4.objects.Intake;
 
 
 /**
@@ -22,31 +20,24 @@ public class Robot {
     //physical objects
     public Drivetrain drivetrain;
 
-    public Intake intake;
 
     public Imu imu;
-
-    public REVDistanceSensor distanceSensor;
 
     public GamepadControls gamepadControls;
 
     //Virtual functions and processorsf
     public TelemetryControls telemetryControls;
 
-    public CameraControls cameraControls;
 
     //public AprilTag aprilTag;
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, Gamepad gamepadUno, Gamepad gamepadDos) throws InterruptedException {
         drivetrain = new Drivetrain(hardwareMap, this);
-        intake = new Intake(hardwareMap);
         imu = new Imu(hardwareMap);
-        distanceSensor = new REVDistanceSensor(hardwareMap);
         gamepadControls = new GamepadControls(this, gamepadUno, gamepadDos);
 
         telemetryControls = new TelemetryControls(this, telemetry);
 
-        cameraControls = new CameraControls(hardwareMap);
 
         //aprilTag = new AprilTag(hardwareMap);
 
@@ -56,11 +47,6 @@ public class Robot {
         //update roadrunner
         drivetrain.update();
 
-        //update intake power if needed
-        intake.updateIntake();
-
-        //update distance sensor variable distance
-        distanceSensor.updateDistance();
 
         //update the motors and their powers if need be
 
